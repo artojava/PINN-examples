@@ -1,0 +1,113 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.bin
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-wheel-metadata/
+.wheelhouse
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+.env/    # if you keep venv in a folder named .env
+env.bak/
+venv.bak/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Project-specific caches
+.mypy_cache/
+.pyre/
+.pytype/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# Jupyter Notebook
+.ipynb_checkpoints/        # checkpoint files (ignore)
+# Keep .ipynb files tracked (do not ignore notebooks themselves)
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Environment and secrets
+.env
+.env.* 
+secrets.yml
+credentials.json
+
+# Data and outputs (common large files)
+data/
+datasets/
+*.csv
+*.tsv
+*.h5
+*.hdf5
+*.parquet
+*.npz
+
+# Logs and runtime files
+*.log
+*.sqlite3
+*.db
+*.pid
+*.sock
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Misc
+coverage/
+coverage.*
+*.bak
+*.swp

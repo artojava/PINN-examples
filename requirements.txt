@@ -1,0 +1,35 @@
+# Auto-generated requirements inferred from notebooks in python/notebooks
+# Date: 2025-10-10
+# Packages collected by scanning the notebooks: JAX/Flax/Equinox/Optax, PyTorch examples, plotting, utilities.
+# Notes:
+# - JAX requires a matching jaxlib binary for your platform (CPU/GPU). See https://github.com/google/jax#pip-installation
+# - You may prefer pinned versions for reproducibility; here we list package names only. Add versions if you need strict reproducibility.
+
+# JAX ecosystem
+jax
+jaxlib
+flax
+equinox
+optax
+
+# PyTorch ecosystem
+torch
+torchvision
+torchaudio
+
+# Scientific / plotting / utilities
+numpy
+matplotlib
+scipy
+plotly
+tqdm
+pillow  # provides PIL
+loguru
+
+# Notebook runtime
+jupyter
+ipywidgets
+ipykernel
+
+# If you want optional extras for CPU-only JAX installations, install jax with the appropriate platform tags,
+# e.g. refer to the JAX docs. If you need GPU support, install a matching jaxlib wheel for your CUDA version.
