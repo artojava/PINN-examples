@@ -17,6 +17,9 @@ torch
 torchvision
 torchaudio
 
+# scikit-learn for ML utilities
+scikit-learn
+
 # Scientific / plotting / utilities
 numpy
 matplotlib
@@ -31,5 +34,6 @@ jupyter
 ipywidgets
 ipykernel
 
-# If you want optional extras for CPU-only JAX installations, install jax with the appropriate platform tags,
-# e.g. refer to the JAX docs. If you need GPU support, install a matching jaxlib wheel for your CUDA version.
+# Data handling
+requests
+pandas
