@@ -111,3 +111,4 @@ coverage/
 coverage.*
 *.bak
 *.swp
+_references_
