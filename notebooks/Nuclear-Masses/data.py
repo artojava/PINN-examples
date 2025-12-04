@@ -1,8 +1,11 @@
 import logging
-import pandas as pd
-import requests
+from typing import Any
+
+import pandas as pd  # type: ignore
+import requests  # type: ignore
 
 logger = logging.getLogger(__name__)
+
 
 class AME2020Parser:
     """Downloader and parser for AME2020 `mass_1.mas20.txt` files.
@@ -40,13 +43,13 @@ class AME2020Parser:
             "ATOMIC MASS (micro-u)": "ATOMIC MASS ESTIMATED",
         }
 
-    def download(self, url):
+    def download(self, url: str) -> list[str]:
         logger.info(f"Downloading and parsing AME2020 mass table from {url}")
         r = requests.get(url)
         r.raise_for_status()
         return r.text.splitlines()
 
-    def _normalize_row(self, line):
+    def _normalize_row(self, line: str) -> list[Any]:
         # Remove leading control char and split tokens
         row = line[1:].split()
         # combine third-last and second-last columns and remove second-last (preserves signs)
@@ -55,15 +58,15 @@ class AME2020Parser:
             del row[-2]
         return row
 
-    def parse(self, lines):
+    def parse(self, lines: list[str]) -> pd.DataFrame:
         data = []
-        for line in lines[self.header_lines:]:
-            if line.startswith('#') or line.strip() == '':
+        for line in lines[self.header_lines :]:
+            if line.startswith("#") or line.strip() == "":
                 continue
             row = self._normalize_row(line)
 
             # if beta-decay energy is missing (marked by '*'), fill with None and add sigma placeholder
-            if len(row) >= 3 and '*' in (row[-3] or ''):
+            if len(row) >= 3 and "*" in (row[-3] or ""):
                 row[-3] = None
                 row.insert(-2, None)
 
@@ -72,20 +75,24 @@ class AME2020Parser:
             if len(row) < expected_nonestimated:
                 row.insert(5, None)
 
-            entry = {}
+            entry: dict[str, Any] = {}
             detected_estimated = {v: False for v in self.estimated_map.values()}
 
-            cols = [c for c in self.column_types.keys() if c not in self.estimated_map.values()]
+            cols = [
+                c
+                for c in self.column_types.keys()
+                if c not in self.estimated_map.values()
+            ]
             for i, col in enumerate(cols):
                 token = None
                 if i < len(row):
                     token = row[i]
-                if isinstance(token, str) and token != '':
-                    if token.endswith('#'):
+                if isinstance(token, str) and token != "":
+                    if token.endswith("#"):
                         if col in self.estimated_map:
                             detected_estimated[self.estimated_map[col]] = True
-                        token = token.rstrip('#')
-                    if '*' in token:
+                        token = token.rstrip("#")
+                    if "*" in token:
                         token = None
                         if col in self.estimated_map:
                             detected_estimated[self.estimated_map[col]] = True
@@ -108,7 +115,7 @@ class AME2020Parser:
         numeric_cols = [c for c, t in extended_types.items() if t in (int, float)]
         for c in numeric_cols:
             if c in df.columns:
-                df[c] = pd.to_numeric(df[c], errors='coerce')
+                df[c] = pd.to_numeric(df[c], errors="coerce")
 
         # Cast boolean estimated flags
         for c, t in extended_types.items():
@@ -120,10 +127,12 @@ class AME2020Parser:
         try:
             df = df.astype(present_types)
         except Exception:
-            logger.warning('Some columns could not be cast to the requested types; kept best-effort conversions.')
+            logger.warning(
+                "Some columns could not be cast to the requested types; kept best-effort conversions."
+            )
 
         return df
 
-    def load(self, url):
+    def load(self, url: str) -> pd.DataFrame:
         lines = self.download(url)
         return self.parse(lines)
